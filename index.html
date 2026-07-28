@@ -193,6 +193,7 @@
   <nav>
     <button id="tab-levels" class="tab-btn active" onclick="openTab('levels')">LEVELS</button>
     <button id="tab-demonlist" class="tab-btn" onclick="openTab('demonlist')">WBDL</button>
+    <button id="noclip-btn" class="tab-btn" onclick="toggleNoclip()">NOCLIP: OFF</button>
   </nav>
 
   <div class="game-window">
@@ -254,6 +255,14 @@
     let currentPage = 0;
     const itemsPerPage = 10;
     let currentTab = 'levels';
+    let noclipEnabled = false;
+
+    function toggleNoclip() {
+      noclipEnabled = !noclipEnabled;
+      const btn = document.getElementById('noclip-btn');
+      btn.innerText = `NOCLIP: ${noclipEnabled ? 'ON' : 'OFF'}`;
+      btn.classList.toggle('active', noclipEnabled);
+    }
 
     function renderPage() {
       const container = document.getElementById('level-list');
@@ -330,7 +339,8 @@
     }
 
     function loadLevel(id) {
-      window.location.href = `https://raw.githack.com/lasokar/geometrydashdotcom/main/game/index.html?id=${id}`;
+      const noclipParam = noclipEnabled ? '&noclip=true' : '';
+      window.location.href = `https://raw.githack.com/lasokar/geometrydashdotcom/main/game/index.html?id=${id}${noclipParam}`;
     }
 
     renderPage();
